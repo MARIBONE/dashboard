@@ -11,9 +11,12 @@
 <title>AE MARIBONE</title>
 </head>
        
-<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 
 
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 
 <style> 
 
@@ -105,12 +108,12 @@ border: 1px solid #000000;
 max-width: 100%; 
 background-color: #ffffff; 
 height: 20em; 
-
+max-width: 100%;
 }
 
 #map {
 height: 20em;
-width: 100%;
+max-width: 100%;
 
 }
 
@@ -275,29 +278,42 @@ visitantes diretos</span>
 
 
 <script>
-var map = L.map('map').setView([0, 0], 2);
+   $(document).ready(function() {
+        // Configuração do mapa
+        var map = L.map('map').setView([-23.5505, -46.6333], 2); // Ajuste a localização inicial e o nível de zoom
 
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19
+        }).addTo(map);
 
-var marker = L.marker([0, 0]).addTo(map);
+        // Adicionar pinos com base nas coordenadas fornecidas na tabela
+        var coordinates = [
+            { lat: -23.5505, lng: -46.6333 }
+            // Adicione mais coordenadas conforme necessário
+        ];
 
-function UpdateDateTime() {
-        var now = new Date();
-        var formattedDate = now.toLocaleDateString('pt-BR');
-        var formattedTime = now.toLocaleTimeString('pt-BR', {
-          hour: '2-digit',
-          minute: '2-digit',
-          second: '2-digit',
-          hour12: false
+        coordinates.forEach(function(coord) {
+            L.marker([coord.lat, coord.lng]).addTo(map)
+                .bindPopup('Localização: ' + coord.lat + ', ' + coord.lng)
+                .openPopup();
         });
 
-        document.getElementById("datetime").innerHTML = formattedDate + '<br>' + formattedTime;
-      }
+        // Função para atualizar o relógio
+        function updateTime() {
+            var now = new Date();
+            var formattedTime = now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            $('#datetime').text(formattedTime);
+        }
+        setInterval(updateTime, 1000);
+        updateTime(); // Atualiza imediatamente na carga da página
 
-      setInterval(UpdateDateTime, 1000);
-      UpdateDateTime();
-
-
+        // Função para atualizar o velocímetro
+        function updateSpeedometer() {
+            var speedometerValue = Math.floor(Math.random() * 101); // Exemplo de valor aleatório
+            $('.speedometer').css('background', 'conic-gradient(#4caf50 0% ' + speedometerValue + '%, #dcdcdc ' + speedometerValue + '% 100%)');
+        }
+        updateSpeedometer(); // Atualiza na carga da página
+    });
     </script>
 
 </body>
