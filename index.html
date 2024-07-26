@@ -32,7 +32,7 @@ text-align: center;
 box-shadow: 0 0 10px rgba(0, 0, 0, 0.9);
 font-weight: bold;
 width: 98vw;
-height: 100vw;
+height: 200vw;
 word-spacing: 0.2em;
 }
 
@@ -112,7 +112,7 @@ max-width: 100%;
 }
 
 #map {
-height: 20em;
+height: 40em;
 max-width: 100%;
 
 }
@@ -120,86 +120,127 @@ max-width: 100%;
 
 
 main {
-display: flex;
-flex-direction: row;
-justify-content: space-between;
-align-items: center;
-margin: 1px; 
-border: 1px solid #000000; 
-max-width: 100%; 
-background-color: #ffffff; 
-height: 11em; 
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            margin: 1px;
+            border: 1px solid #000000;
+            max-width: 100%;
+            background-color: #ffffff;
+            height: 11em;
+        }
 
+        .donut-chart {
+            margin-left: -5em;
+            width: 50%;
+            height: 50%;
+            border-radius: 50%;
+            background: conic-gradient(#ff6384 0% 50%, #36a2eb 50% 75%, #ffce56 75% 90%, #4bc0c0 90% 100%);
+            position: relative;
+        }
+
+        .donut-chart::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 70%;
+            height: 70%;
+            background: #ffffff;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+        }
+
+        .legend {
+            font-size: 75%;
+            position: absolute;
+            bottom: 0;
+            left: 100%;
+            transform: translateX(-50%);
+            width: 1%;
+            display: flex;
+            flex-direction: column;
+            align-items: left;
+            box-sizing: border-box;
+            z-index: 2;
+        }
+
+        .legend span {
+            display: flex;
+            align-items: center;
+            margin: 3px 0;
+        }
+
+        .color-box {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+
+ footer {
+    margin: 1px; 
+    border: 1px solid #000000; 
+    max-width: 98%; 
+    background-color: #ffffff; 
+    height: 100%; 
+    overflow: auto; /* Adicionado para permitir rolagem se necessário */
+    box-sizing: border-box; /* Adicionado para incluir padding e bordas na largura total */
+  }
+
+  table {
+    width: 100%; /* Garantido para ocupar toda a largura disponível */
+    border-collapse: collapse;
+    table-layout: fixed; /* Adicionado para evitar que a tabela se expanda além da largura */
+  }
+
+  table, th, td {
+    border: 1px solid black;
+  }
+
+  th, td {
+    padding: 8px;
+    text-align: left;
+    overflow: hidden; /* Adicionado para esconder o conteúdo que ultrapassa a célula */
+    text-overflow: ellipsis; /* Adicionado para mostrar '...' em vez de texto cortado */
+    white-space: nowrap; /* Adicionado para evitar quebra de linha dentro das células */
+    box-sizing: border-box; /* Adicionado para incluir padding e bordas na largura total */
+  }
+
+  th {
+    background-color: #f4f4f4; /* Opcional: cor de fundo para os cabeçalhos */
+  }
+
+
+#coordinates-data {
+    margin: 1px; 
+    border: 1px solid #000000; 
+    max-width: 98%; 
+    background-color: #ffffff; 
+    height: 100%; 
+    overflow: auto; /* Adicionado para permitir rolagem se necessário */
+    box-sizing: border-box; /* Adicionado para incluir padding e bordas na largura total 
 }
 
-.donut-chart {
-margin-left: -5em;
-width: 50%;
-height: 50%;
-border-radius: 50%;
-background: conic-gradient(#ff6384 0% 50%, #36a2eb 50% 75%, #ffce56 75% 90%, #4bc0c0 90% 100%);
-position: relative;
-
-
+#coordinates-data table {
+    width: 100%;
+    border-collapse: collapse;
 }
 
-.donut-chart::before {
-content:'';
-position: absolute;
-top: 50%;
-left: 50%;
-width: 70%;
-height: 70%;
-background: #ffffff;
-border-radius: 50%;
-transform: translate(-50%, -50%);
-z-index: 10;
+#coordinates-data th, #coordinates-data td {
+    border: 1px solid #ddd;
+    padding: 8px;
 }
 
-.legend {
-font-size: 75%;
-position: absolute;
-bottom: 0;
-left: 100%;
-transform: translateX(-50%);
-width: 1%;
-display: flex;
-flex-direction: column;
-align-items: left;
-box-sizing: border-box;
-z-index: 2;
+#coordinates-data th {
+    background-color: #f4f4f4;
 }
 
-.legend span {
-display: flex;
-align-items: center;
-margin: 3px 0;
-}
-
-.color-box {
-width: 20px;
-height: 20px;
-border-radius: 50%;
-margin-right: 8px;
-}
-
-footer {
-display: flex;
-flex-direction: row;
-justify-content: space-evenly;
-margin: 1px; 
-border: 1px solid #000000; 
-max-width: 100%; 
-background-color: #ffffff; 
-height: 15em; 
-
-}
-
-table {
-width: 100%;
 
 
-}
 </style>
 
 <body>
@@ -231,89 +272,191 @@ contador
 
 
 <main>
-<div style="margin: 10px; border: 1px solid #000000; width: 25%; height: 10em;">
-caixa de mensagem
-</div>
-
-<div style="margin: 10px; border: 1px solid #000000; width: 25%; height: 10em;">
-mapa de calor
-</div>
-
-<div style="margin: 10px; border: 1px solid #000000; width: 25%; height: 10em;">
-agenda
-</div>
-
-<div id="chart-container" style="display: flex; justify-content: space-evenly; align-items: center; margin: 10px; border: 1px solid #000000; width: 25%; height: 10em;">
-<div class="donut-chart">
-<div class="legend">
-<span><div class="color-box" style="background-color: #ff6384;"></div>
-visitantes diretos</span>
-<span><div class="color-box" style="background-color: #36a2eb;"></div> referencias</span>
-<span><div class=color-box" style="background-color: #ffce56;"></div> buscas organicas</span>
-<span><div class=color-box" style="background-color: #4bc0c0;"></div> outros</span>
-</div>
-</div>
-</div>
-
+    <div style="margin: 10px; border: 1px solid #000000; width: 25%; height: 10em;">caixa de mensagem</div>
+    <div style="margin: 10px; border: 1px solid #000000; width: 25%; height: 10em;">mapa de calor</div>
+    <div style="margin: 10px; border: 1px solid #000000; width: 25%; height: 10em;">agenda</div>
+    <div id="chart-container" style="display: flex; justify-content: space-evenly; align-items: center; margin: 10px; border: 1px solid #000000; width: 25%; height: 10em;">
+        <div class="donut-chart">
+            <div class="legend">
+                <span><div class="color-box" style="background-color: #ff6384;"></div> Categoria 1</span>
+                <span><div class="color-box" style="background-color: #36a2eb;"></div> Categoria 2</span>
+                <span><div class="color-box" style="background-color: #ffce56;"></div> Categoria 3</span>
+                <span><div class="color-box" style="background-color: #4bc0c0;"></div> Categoria 4</span>
+            </div>
+        </div>
+    </div>
 </main>
 
-<footer>
-<table border="1">
-<tr>
-<th>DATA</th>
-<th>IP</th>
-<th>DISPOSITIVO</th>
-<th>SISTEMA OPERACIONAL</th>
-<th>NAVEGADOR E VERSÃO</th>
-<th>RESOLUÇÃO</th>
-</tr>
+<footer style="max-width: 100%;">
+    <table border="1" id="data-table">
+      <tr>
+        <th>DATA</th>
+        <th>IP</th>
+        <th>DISPOSITIVO</th>
+        <th>SISTEMA OPERACIONAL</th>
+        <th>NAVEGADOR E VERSÃO</th>
+        <th>RESOLUÇÃO</th>
+      </tr>
+    </table>
+  </footer>
 
-<tr>
-<td>linha1, celula1</td>
-</table>
-
-</footer>
-
+<div id="coordinates-data">
+    <table>
+        <thead>
+            <tr>
+                <th>Latitude</th>
+                <th>Longitude</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Os dados da tabela serão populados via JavaScript -->
+        </tbody>
+    </table>
+    <script id="json-data" type="application/json">
+        {
+            "coordinates": [
+                {"latitude": -23.5505, "longitude": -46.6333},
+                {"latitude": -22.9035, "longitude": -43.2096"}
+            ]
+        }
+    </script>
+</div>
 
 
 
 <script>
-   $(document).ready(function() {
-        // Configuração do mapa
-        var map = L.map('map').setView([-23.5505, -46.6333], 2); // Ajuste a localização inicial e o nível de zoom
+$(document).ready(function() {
+    // Configuração do mapa
+    var map = L.map('map').setView([0, 0], 2); // Inicializa o mapa com uma visão ampla
 
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19
-        }).addTo(map);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19
+    }).addTo(map);
 
-        // Adicionar pinos com base nas coordenadas fornecidas na tabela
-        var coordinates = [
-            { lat: -23.5505, lng: -46.6333 }
-            // Adicione mais coordenadas conforme necessário
-        ];
+    // Função para adicionar pinos ao mapa e ajustar o nível de zoom
+    function addPins(coordinates) {
+        var bounds = L.latLngBounds(); // Cria um objeto para definir os limites do mapa
 
         coordinates.forEach(function(coord) {
             L.marker([coord.lat, coord.lng]).addTo(map)
                 .bindPopup('Localização: ' + coord.lat + ', ' + coord.lng)
                 .openPopup();
+
+            bounds.extend([coord.lat, coord.lng]); // Adiciona cada coordenada aos limites
         });
 
-        // Função para atualizar o relógio
-        function updateTime() {
-            var now = new Date();
-            var formattedTime = now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-            $('#datetime').text(formattedTime);
-        }
-        setInterval(updateTime, 1000);
-        updateTime(); // Atualiza imediatamente na carga da página
+        map.fitBounds(bounds); // Ajusta o nível de zoom e a visualização para incluir todos os pinos
+    }
 
-        // Função para atualizar o velocímetro
-        function updateSpeedometer() {
-            var speedometerValue = Math.floor(Math.random() * 101); // Exemplo de valor aleatório
-            $('.speedometer').css('background', 'conic-gradient(#4caf50 0% ' + speedometerValue + '%, #dcdcdc ' + speedometerValue + '% 100%)');
+    // Função para buscar dados da div e adicionar pinos ao mapa
+    function fetchCoordinatesFromDiv() {
+        var coordinatesData = $('#coordinates-data').text();
+        var coordinates = JSON.parse(coordinatesData); // Converte o texto em JSON
+        addPins(coordinates); // Adiciona os pinos ao mapa
+    }
+
+    fetchCoordinatesFromDiv(); // Busca os dados e adiciona os pinos ao mapa
+
+    // Função para atualizar o relógio
+    function updateTime() {
+        var now = new Date();
+        var formattedTime = now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        $('#datetime').text(formattedTime);
+    }
+    setInterval(updateTime, 1000);
+    updateTime(); // Atualiza imediatamente na carga da página
+
+    // Função para atualizar o velocímetro
+    function updateSpeedometer() {
+        var speedometerValue = Math.floor(Math.random() * 101); // Exemplo de valor aleatório
+        $('.speedometer').css('background', 'conic-gradient(#4caf50 0% ' + speedometerValue + '%, #dcdcdc ' + speedometerValue + '% 100%)');
+    }
+    updateSpeedometer(); // Atualiza na carga da página
+});
+
+
+
+
+
+
+
+
+
+  function fetchData() {
+            fetch('https://script.google.com/macros/s/AKfycbwImFxSlckTM7-lgIVninep7aRWhedB-P1d2fyNvX2d7GDEJdtlP7pzgEy8a2DTBfso/exec')
+                .then(response => response.json())
+                .then(data => {
+                    populateDataTable(data);
+                })
+                .catch(error => console.error('Error fetching data:', error));
         }
-        updateSpeedometer(); // Atualiza na carga da página
-    });
+
+        function populateDataTable(data) {
+            let table = '<tr>';
+            // Adicionar o cabeçalho
+            for (let i = 0; i < data[0].length; i++) {
+                table += `<th>${data[0][i]}</th>`;
+            }
+            table += '</tr>';
+
+            // Inverter a ordem dos dados e remover o cabeçalho da primeira linha (índice 0)
+            let reversedData = data.slice(1).reverse(); // Remove o cabeçalho e inverte os dados
+
+            // Adicionar as linhas de dados
+            for (let i = 0; i < reversedData.length; i++) {
+                table += '<tr>';
+                for (let j = 0; j < reversedData[i].length; j++) {
+                    table += `<td>${reversedData[i][j]}</td>`;
+                }
+                table += '</tr>';
+            }
+
+            document.getElementById('data-table').innerHTML = table;
+        }
+
+
+
+
+        function fetchCoordinatesFromDiv() {
+            try {
+                // Obtém o texto JSON do elemento <script>
+                const jsonText = document.getElementById('json-data').textContent.trim();
+
+                // Analisa o JSON
+                const data = JSON.parse(jsonText);
+
+                // Verifica se a estrutura do JSON é a esperada
+                if (!data || !Array.isArray(data.coordinates)) {
+                    throw new Error('Formato JSON inesperado.');
+                }
+
+                populateCoordinatesTable(data.coordinates);
+            } catch (error) {
+                console.error('Erro ao analisar JSON:', error);
+            }
+        }
+
+        function populateCoordinatesTable(coordinates) {
+            let tableRows = '';
+
+            // Adiciona as linhas de dados
+            for (let i = 0; i < coordinates.length; i++) {
+                tableRows += '<tr>';
+                tableRows += `<td>${coordinates[i].latitude}</td>`;
+                tableRows += `<td>${coordinates[i].longitude}</td>`;
+                tableRows += '</tr>';
+            }
+
+            // Adiciona as linhas à tabela
+            document.querySelector('#coordinates-data table tbody').innerHTML = tableRows;
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            fetchData();
+            fetchCoordinatesFromDiv();
+        });
+
+
     </script>
 
 </body>
