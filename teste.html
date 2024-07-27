@@ -14,29 +14,37 @@
     </style>
 </head>
 <body>
-    <div id="coordinates-data"></div>
+    <div id="coordinates-data">Carregando...</div>
 
     <script>
         $(document).ready(function() {
             // Obtém o IP público
-            $.getJSON('https://api.ipify.org?format=json', function(data) {
-                var ip = data.ip;
-                
-                // Obtém coordenadas baseadas no IP
-                $.getJSON(`https://ipinfo.io/${ip}/json?token=fb445d077454b7`, function(locationData) {
-                    var latitude = locationData.loc ? locationData.loc.split(',')[0] : 'Não disponível';
-                    var longitude = locationData.loc ? locationData.loc.split(',')[1] : 'Não disponível';
+            $.getJSON('https://api.ipify.org?format=json')
+                .done(function(data) {
+                    var ip = data.ip;
+                    
+                    // Obtém coordenadas baseadas no IP
+                    $.getJSON(`https://ipinfo.io/${ip}/json?token=fb445d077454b7`)
+                        .done(function(locationData) {
+                            var loc = locationData.loc || '';
+                            var [latitude, longitude] = loc.split(',');
 
-                    // Atualiza a div com as coordenadas
-                    var coordinatesHtml = `
-                        <table>
-                            <tr><th>Latitude</th><td>${latitude}</td></tr>
-                            <tr><th>Longitude</th><td>${longitude}</td></tr>
-                        </table>
-                    `;
-                    $('#coordinates-data').html(coordinatesHtml);
+                            // Atualiza a div com as coordenadas
+                            var coordinatesHtml = `
+                                <table>
+                                    <tr><th>Latitude</th><td>${latitude || 'Não disponível'}</td></tr>
+                                    <tr><th>Longitude</th><td>${longitude || 'Não disponível'}</td></tr>
+                                </table>
+                            `;
+                            $('#coordinates-data').html(coordinatesHtml);
+                        })
+                        .fail(function() {
+                            $('#coordinates-data').html('Erro ao obter coordenadas.');
+                        });
+                })
+                .fail(function() {
+                    $('#coordinates-data').html('Erro ao obter IP.');
                 });
-            });
         });
     </script>
 </body>
