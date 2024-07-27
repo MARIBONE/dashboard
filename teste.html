@@ -20,10 +20,12 @@
         $(document).ready(function() {
             // Obtém o IP público
             $.getJSON('https://api.ipify.org?format=json', function(data) {
+                var ip = data.ip;
+                
                 // Obtém coordenadas baseadas no IP
-                $.getJSON('https://ipapi.co/' + data.ip + '/json/', function(locationData) {
-                    var latitude = locationData.latitude || 'Não disponível';
-                    var longitude = locationData.longitude || 'Não disponível';
+                $.getJSON(`https://ipinfo.io/${ip}/json?token=fb445d077454b7`, function(locationData) {
+                    var latitude = locationData.loc ? locationData.loc.split(',')[0] : 'Não disponível';
+                    var longitude = locationData.loc ? locationData.loc.split(',')[1] : 'Não disponível';
 
                     // Atualiza a div com as coordenadas
                     var coordinatesHtml = `
