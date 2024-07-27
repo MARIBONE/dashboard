@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exemplo de Coordenadas</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        #coordinates-data {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="coordinates-data"></div>
+
+    <script>
+        $(document).ready(function() {
+            // Obtém o IP público
+            $.getJSON('https://api.ipify.org?format=json', function(data) {
+                // Obtém coordenadas baseadas no IP
+                $.getJSON('https://ipapi.co/' + data.ip + '/json/', function(locationData) {
+                    var latitude = locationData.latitude || 'Não disponível';
+                    var longitude = locationData.longitude || 'Não disponível';
+
+                    // Atualiza a div com as coordenadas
+                    var coordinatesHtml = `
+                        <table>
+                            <tr><th>Latitude</th><td>${latitude}</td></tr>
+                            <tr><th>Longitude</th><td>${longitude}</td></tr>
+                        </table>
+                    `;
+                    $('#coordinates-data').html(coordinatesHtml);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
