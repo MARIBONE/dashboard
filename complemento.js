@@ -1,4 +1,4 @@
-<script>
+
 $(document).ready(function() {
         // Configuração do mapa
         var map = L.map('map').setView([-23.5505, -46.6333], 2); // Ajuste a localização inicial e o nível de zoom
@@ -113,12 +113,3 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-
-
-
-
-
-
-
-
-    </script>
